@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<!--
+                             MMMMMM    MMMMMM
+                        MMMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                  MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                  MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                  MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+      MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+      MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                MM  MM      MM..        MM..      MM  MM
+                MM  MM      MMMM        MMMM      MM  MM
+                MM  MM                            MM  MM
+                MM  MM    MMMMMMMMMMMMMMMMMMMM    MM  MM
+              MMMM  MM    MM                MM    MM  MMMM
+              MM      MMMM    MMMMMMMMMMMM    MMMM      MM
+              MM    MM  MM  MM            MM  MM  MM    MM
+              MM    MM  MMMM                MMMM  MM    MM
+              MMMM  MM    MM                MM    MM  MMMM
+                    MM                            MM
+                    MMMMMM                    MMMMMM
+                  MMMMMMMM      MMMMMMMM      MMMMMMMM
+                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+              MMMMMMMMMMMMMMMMMMMM    MMMMMMMMMMMMMMMMMMMM
+            MMMMMMMMMMMMMMMMMMMMMM    MMMMMMMMMMMMMMMMMMMMMM
+          MMMMMMMMMMMMMMMMMMMM            MMMMMMMMMMMMMMMMMMMM
+        MMMMMMMMMMMMMMMMMMMMMM            MMMMMMMMMMMMMMMMMMMMMM
+      MMMMMMMMMMMMMMMMMMMM        MMMM        MMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMM        MMMM        MMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMM        MMMMMMMMMMMM        MMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMM    MMMMMMMM    MMMMMMMM    MMMMMMMMMMMMMMMM  MM
+    MM  MMMMMMMMMMMMMM    MMMMMMMM    MMMMMMMM    MMMMMMMMMMMMMMMMMMMM
+  MM    MMMMMMMMMMMMMM        MMMMMMMMMMMM        MMMMMMMMMMMM  MM    MM
+  MMMMMMMM  MMMMMMMMMMMMMM        MMMM        MMMMMMMMMMMMMM    MM    MM
+MM    MM      MMMMMMMMMMMM        MMMM        MMMMMMMMMMMM      MM    MM
+MM    MM        MMMMMMMMMMMMMM            MMMMMMMMMMMMMM          MMMM
+MM    MM        MMMMMMMMMMMMMM            MMMMMMMMMMMMMM
+  MMMM          MM  MMMMMMMMMMMMMM    MMMMMMMMMMMMMM  MM
+              MM      MMMMMMMMMMMM    MMMMMMMMMMMM      MM
+              MM        MMMMMMMMMMMMMMMMMMMMMMMM        MM
+              MMMM        MMMMMMMMMMMMMMMMMMMM        MMMM
+                MMMMMMMM  MMMMMMMMMMMMMMMMMMMM  MMMMMMMM
+              MMMM    MMMM    MMMMMMMMMMMM    MMMM    MMMM
+              MMMM    MMMM      MMMMMMMM      MMMM    MMMM
+            MMMM      MMMM        MMMM        MMMM      MMMM
+            MM    MMMMMM                        MMMMMM    MM
+            MMMMMMMMMMMM                        MMMMMMMMMMMM
+
+Poncho te saluda, amigo del código!
+
+-->
+<!--[if IEMobile 7 ]>
+<html lang="es" class="iem7"> <![endif]-->
+<!--[if lt IE 7 ]>
+<html lang="es" class="ie6 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="es" class="ie7 lt-ie8"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="es" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html lang="es"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Recuperar contraseña{% endblock %} | Decretos Posadas</title>
+    <meta name="description"
+          content="Login decretos">
+    <meta name="author" content="Matias Solis de la Torre">
+    <link rel="shortcut icon" href="logo_oficial.ico">
+
+    <!-- Nav and address bar color -->
+    <meta name="theme-color" content="{{ app_color }}">
+    <meta name="msapplication-navbutton-color" content="{{ app_color }}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="{{ app_color }}">
+
+    {{ encore_entry_link_tags('css/login') }}
+
+    {{ encore_entry_script_tags('login') }}
+    <style>
+        .navbar-default .btn-link {
+            color: {{ app_color }};
+        }
+
+        .btn i[class*="icono-arg"] {
+            margin-right: 8px;
+        }
+
+        header .btn i[class*="icono-arg"] {
+            font-size: 1em;
+            height: 22px;
+            float: left;
+        }
+
+        .navbar-default {
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+            padding-bottom: 4rem;
+        }
+
+        .brand-logo {
+            max-height: 6rem;
+        }
+
+        @media (max-width: 490px) {
+            .navbar .container .navbar-header .navbar-brand {
+                width: 33%;
+                height: auto;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-top navbar-default" role="navigation">
+        <div class="container">
+            <div>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('web_index') }}" aria-label="Posadas">
+                        <img alt="Posadas"
+                             src="{{ asset('build/images/logo_oficial.png') }}">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+    {% block body %}
+    {% endblock body %}
+</main>
+</body>
+</html>

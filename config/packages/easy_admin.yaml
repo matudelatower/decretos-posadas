@@ -1,0 +1,58 @@
+easy_admin:
+    disabled_actions: ['delete']
+    entities:
+#         List the entity class name you want to manage
+#        - App\Entity\Decreto
+#        - App\Entity\Category
+#        - App\Entity\User
+        Decreto:
+            class: App\Entity\Decreto
+            form:
+                fields:
+                  - { property: 'numero', label: 'Número' }
+                  - { property: 'anio', label: 'Año' }
+                  - { property: 'descripcion', label: 'Descripción' }
+                  - { property: 'fecha', type: 'date', type_options: { widget: 'single_text', html5: true } }
+                  - { property: 'palabrasClave', type: 'easyadmin_autocomplete' }
+                  - { property: 'decretoFile', label: 'Archivo', type: 'vich_file', base_path: '%app.path.decretos%' }
+                  - { property: 'destacado' }
+                  - { property: 'activo' }
+        User:
+            class: App\Entity\User
+            list:
+              fields:
+                - { property: 'username' }
+                - { property: 'email', type: 'email' }
+                - { property: 'enabled' }
+                - { property: 'lastLogin' }
+        PalabraClave:
+            class: App\Entity\PalabraClave
+            list:
+                fields:
+                  - { property: 'descripcion' }
+            form:
+                fields:
+                  - descripcion
+
+
+    site_name: '%env(APP_NAME)%'
+    show:
+        max_results: 20
+    list:
+        actions:
+            - { name: 'show', icon: 'eye', label: '' }
+            - { name: 'edit', icon: 'pencil', label: '' }
+      #            - { name: 'delete', icon: 'trash', label: '' }
+
+    design:
+        brand_color: '#%env(APP_COLOR)%'
+#            templates:
+#                layout: 'easyadmin/default/layout.html.twig'
+        form_theme:
+          - '@EasyAdmin/form/bootstrap_4.html.twig'
+        menu:
+          - { label: 'Ver Web', route: 'web_index', icon: 'globe'  }
+          - { label: 'Decretos', entity: Decreto }
+          - { label: 'Palabras Clave', entity: PalabraClave, icon: 'key' }
+          - { label: 'Usuarios', entity: User, icon: 'user' }
+

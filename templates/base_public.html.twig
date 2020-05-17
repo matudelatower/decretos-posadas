@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]>
+<html lang="es" class="iem7"> <![endif]-->
+<!--[if lt IE 7 ]>
+<html lang="es" class="ie6 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="es" class="ie7 lt-ie8"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="es" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html lang="es"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} - Decretos Posadas</title>
+    <meta name="description" content="Buscador de Decretos de la Ciudad de Posadas">
+    <meta name="author" content="Matias Solis de la Torre">
+    <link rel="shortcut icon" href="logo_oficial.ico">
+
+    <!-- Nav and address bar color -->
+    <meta name="theme-color" content="{{ app_color }}">
+    <meta name="msapplication-navbutton-color" content="{{ app_color }}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="{{ app_color }}">
+
+    {% block meta_social %}
+        {% set titulo = 'Decretos Posadas' %}
+        {% set description = 'Buscador de decretos Posadas' %}
+        {% set image = asset('build/images/banner-estacion.jpg') %}
+        <meta property="og:url" content="{{ app_url }}"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="{{ titulo }}"/>
+        <meta property="og:description" content="{{ description }}"/>
+        <meta property="og:image" content="{{ image }}"/>
+        <meta property="og:locale" content="es_AR"/>
+
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:title" content="{{ titulo }}"/>
+        <meta name="twitter:description" content="{{ description }}"/>
+        <meta name="twitter:image" content="{{ image }}"/>
+    {% endblock meta_social %}
+
+    {{ encore_entry_link_tags('css/web') }}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="http://argob.github.io/poncho/js/html5shiv.js"></script>
+    <script src="http://argob.github.io/poncho/js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        @media print {
+            /* All your print styles go here */
+            main .jumbotron {
+                display: none;
+            }
+
+            main, .pane-content .print, .print h2 {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            #destacados {
+                padding: 0;
+                margin: 0;
+                page-break-after: always;
+            }
+
+            .panel {
+
+                border: 2px solid #333;
+                border-radius: 5px;
+                margin: 10px 0 !important;
+            }
+
+            .row.apps {
+                width: 100%;
+                margin: 0 auto;
+            }
+
+
+            .panel-heading {
+                display: none;
+            }
+
+            .panel-separator, .panel-pane.pane-atajos, .pane-content {
+                padding: 0;
+                margin: 0;
+            }
+
+            .page-break {
+                display: block;
+                height: 100px;
+                width: 100%;
+            }
+
+            .panel {
+                margin: 0;
+            }
+
+            .panel-body {
+                margin: 10px;
+            }
+
+
+        }
+
+        .brand-logo {
+            max-height: 6rem;
+        }
+
+        .navbar-default {
+            padding-bottom: 3rem;
+        }
+
+        @media (max-width: 490px) {
+            .navbar .container .navbar-header .navbar-brand {
+                width: 33%;
+                height: auto;
+                padding: 1rem;
+            }
+        }
+        body{
+            background-color: #F2F3F4;
+        }
+    </style>
+
+    {% block stylesheets %}{% endblock %}
+
+</head>
+
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>#}
+{#<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>#}
+{{ encore_entry_script_tags('web') }}
+<body>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v7.0"></script>
+
+<header>
+    <nav class="navbar navbar-top navbar-default" role="navigation">
+        <div class="container">
+            <div>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('web_index') }}"
+                       aria-label="Posadas">
+                        <img class="img-responsive brand-logo" alt="Posadas"
+                             src="{{ asset('build/images/logo_oficial.png') }}">
+                    </a>
+                </div>
+                <ul class="nav navbar-nav navbar-right hidden-xs">
+
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") %}
+                        <li><a href="{{ path('easyadmin') }}">ADMIN</a></li>
+                    {% endif %}
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+
+{% block body %}
+
+{% endblock %}
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img class="image-responsive" alt="{{ app_url }} - Municipalidad de la Ciudad de Posadas"
+                     src="{{ asset('build/images/logo_oficial.png') }}" height="50">
+                <p class="text-muted small"><a href="https://creativecommons.org/licenses/by/2.5/ar/">Los contenidos de
+                        {{ app_url }} están licenciados bajo Creative Commons Reconocimiento 2.5 Argentina
+                        License</a></p>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <ul>
+                    <li><a href="https://posadas.gov.ar" target="_blank">Municipalidad de Posadas</a></li>
+                    <li><a href="https://hcdposadas.gob.ar" target="_blank">Honorable Concejo Deliberante de la Ciudad
+                            de Posadas</a></li>
+                    <li><a href="http://digesto.hcdposadas.gob.ar" target="_blank">Digesto Municipal</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <ul>
+                    <li><a href="#">Acerca de este sitio</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Ayuda</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

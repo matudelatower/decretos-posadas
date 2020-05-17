@@ -1,0 +1,115 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block meta_social %}
+    {#    {% set description = 'Buscador de decretos' %}#}
+    {% set url = app.request.uri %}
+    {#    {% set image = absolute_url(asset('build/images/portada-share.jpg')) %}#}
+    {% set image = 'https://www.argentina.gob.ar/sites/default/files/styles/jumbotron/public/backimage_buscador/dsc_6377_paisaje_jujuy.jpg?itok=08iW_ZPN' %}
+
+    <meta property="og:url" content="{{ app_url }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ titulo }}"/>
+    <meta property="og:description" content="{{ decreto.descripcion }}"/>
+    <meta property="og:image" content="{{ image }}"/>
+    <meta property="og:locale" content="es_AR"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ titulo }}"/>
+    <meta name="twitter:description" content="{{ decreto.descripcion }}"/>
+    <meta name="twitter:image" content="{{ image }}"/>
+{% endblock meta_social %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <main role="main">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('web_index') }}">Inicio</a></li>
+                <li class="active">Decreto</li>
+            </ol>
+
+            <section>
+                <article class="content_format row">
+                    <div class="col-md-8 col-md-offset-2">
+
+                        <h1>Decreto Nº {{ decreto.numero }} {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") %}
+                                <a class="btn btn-icon"
+                                   href="{{ path('easyadmin') }}?entity=Decreto&action=edit&referer={{ app.request.uri }}&id={{ decreto.id }}">
+
+                                    <i class="fa fa-edit"></i> Editar
+                                </a>
+                            {% endif %}</h1>
+                        <div class="row">
+                            <div class="section-actions col-md-7 social-share">
+                                <p>Compartir</p>
+                                <ul class="list-inline">
+                                    <li>
+                                        <a target="_blank"
+                                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                                           class="fb-xfbml-parse-ignore"><i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/intent/tweet?text=Decreto Nº {{ decreto.numero }} de la Ciudad de Posadas&url={{ app.request.uri }}"><i
+                                                    class="fa fa-twitter "></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="whatsapp://send?text=Decreto Nº {{ decreto.numero }} de la Ciudad de Posadas - {{ app.request.uri }}"
+                                           data-action="share/whatsapp/share">
+                                            <i class="fa fa-whatsapp "></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <hr>
+
+                        <h2 class="text-right">{{ decreto.fecha | date('d/m/Y') }}</h2>
+                        <p>{{ decreto.descripcion }}</p>
+
+                        {% if decreto.archivo %}
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <embed class="embed-responsive-item"
+                                       src="{{ vich_uploader_asset(decreto, 'decretoFile') }}">
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-8 col-md-offset-2">
+
+                        {% if decreto.archivo %}
+                            <div class="downloads">
+                                <hr>
+                                <h4>Descargas</h4>
+
+                                <div class="row row-flex">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <p class="text-muted m-b-1">Decreto </p>
+                                        <a class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Descargar
+                                            archivo</a>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </article>
+            </section>
+        </div>
+
+    </main>
+{% endblock body %}

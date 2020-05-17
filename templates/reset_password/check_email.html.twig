@@ -1,0 +1,38 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Email enviado{% endblock %}
+
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4 class="activities-sidbar">Revisá tu correo electrónico</h4>
+                    <p>Te va a llegar un correo electrónico a con un enlace, que caduca en {{ tokenLifetime|date('g') }} houra/s.</p>
+                    <p>
+                        Si no recibiste el correo, verificá la carpeta de "SPAM" o <a href="{{ path('app_forgot_password_request') }}">volvé a intentar</a>
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="row  m-t-3 m-b-3">
+                <div class="col-md-6 col-md-offset-3">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a href="{{ path('app_login') }}" class="btn btn-link">VOLVER A INICIO</a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </section>
+{% endblock %}
+
+

@@ -1,0 +1,143 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block meta_social %}
+    {% set description = 'Buscador de decretos' %}
+    {% set url = app.request.uri %}
+    {#    {% set image = absolute_url(asset('build/images/portada-share.jpg')) %}#}
+    {% set image = asset('build/images/banner-estacion.jpg') %}
+
+    <meta property="og:url" content="{{ app_url }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="{{ titulo }}"/>
+    <meta property="og:description" content="{{ description }}"/>
+    <meta property="og:image" content="{{ image }}"/>
+    <meta property="og:locale" content="es_AR"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ titulo }}"/>
+    <meta name="twitter:description" content="{{ description }}"/>
+    <meta name="twitter:image" content="{{ image }}"/>
+{% endblock meta_social %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <main role="main">
+
+
+        {% if decretosDestacados %}
+            <section>
+                <div class="container">
+                    <div>
+
+                        <div class="panel-separator"></div>
+                        <div class="panel-pane pane-atajos">
+                            <div class="pane-content">
+
+
+                                <div class="row panels-row " id="destacados">
+                                    {% set cantidad = 12/(decretosDestacados | length) %}
+                                    {% for destacado in decretosDestacados %}
+                                        <div class="col-xs-12 col-sm-6 col-md-{{ cantidad | number_format}}">
+                                            <a href="{{ path('web_ver_decreto', {'decreto': destacado.id}) }}"
+                                               class="panel panel-default">
+                                                <div style="background-image:url({{ asset('build/images/andresito_default.png') }});"
+                                                     class="panel-heading"></div>
+                                                <div class="panel-body"><h4>{{ destacado.numero }}</h4>
+                                                    <div class="text-muted"><p>{{ destacado.descripcion }}</p></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="panel-separator"></div>
+
+                    </div>
+
+
+                </div>
+            </section>
+        {% endif %}
+
+        <section class="jumbotron"
+                 style="background-image:url('{{ asset('build/images/banner-estacion.jpg') }}');">
+            <div class="jumbotron_body jumbotron_body-lg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">Buscar decretos</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            {#                            <form role="search">#}
+                            {{ form_start(form) }}
+                            <div class="input-group input-group-lg">
+                                {{ form_widget(form.s) }}
+                                <span class="input-group-btn">
+                <button class="btn btn-primary" aria-label="Buscar" type="button"><span
+                            class="glyphicon glyphicon-search"></span></button>
+              </span>
+                            </div>
+                            {#                            </form>#}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay"></div>
+        </section>
+        {% if decretos %}
+            <section>
+                <div class="container">
+
+                    <div>
+                        <div class="panel-pane pane-texto">
+                            <div class="pane-content">
+                                <div class="">
+                                    <section class="m-y-0 p-y-1">
+
+                                        <h2>Resultados</h2>
+                                        <div class="">
+                                            <div class="row panels-row m-t-2 ">
+                                                {% for decreto in decretos %}
+                                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                                        <a class="panel panel-default"
+                                                           href="{{ path('web_ver_decreto', {'decreto': decreto.id}) }}">
+                                                            <div class="panel-body">
+                                                                <div class="media">
+                                                                    <div class="media-left padding-20"><i
+                                                                                class="fa icono-arg-educacion fa-fw fa-2x text-primary"></i>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h3>{{ decreto.numero }}</h3>
+                                                                        <p>{{ decreto.descripcion }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+        {% block javascripts %}{% endblock %}
+    </main>
+{% endblock %}

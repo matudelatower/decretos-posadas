@@ -1,0 +1,18 @@
+//@import url("https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i");
+@import "~ar-poncho/dist/css/roboto-fontface.css";
+$brand-primary: #35bc75;
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import "~ar-poncho/dist/css/poncho.min.css";
+@import "~ar-poncho/dist/css/icono-arg.css";
+//@import "~ar-poncho/dist/css/";
+
+a.panel:hover, a.panel:focus{
+  background: $brand-primary;
+}
+
+.fa.text-primary {
+  color: $brand-primary !important;
+}
