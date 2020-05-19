@@ -162,7 +162,7 @@ class Decreto extends BaseClass {
 	/**
 	 * @param string $archivo
 	 */
-	public function setArchivo( string $archivo ): void {
+	public function setArchivo( ?string $archivo ): void {
 		$this->archivo = $archivo;
 	}
 
