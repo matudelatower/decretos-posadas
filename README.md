@@ -5,7 +5,9 @@ Prerrequisitos:
 =
 - php 7.3 o superior
 - MySQL 5.7
+- node 10
 - Servidor web Apache2/ngingx
+
 
 Deploy:
 =
