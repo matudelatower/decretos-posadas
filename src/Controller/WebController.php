@@ -16,7 +16,10 @@ class WebController extends AbstractController {
 		$em = $this->getDoctrine();
 
 		$decretos           = [];
-		$decretosDestacados = $em->getRepository( Decreto::class )->findBy( [ 'destacado' => true ] );
+		$decretosDestacados = $em->getRepository( Decreto::class )->findBy( [
+			'destacado' => true,
+			'activo'    => true
+		] );
 
 		$form = $this->createForm( BuscarDecretoType::class,
 			[],
@@ -48,12 +51,29 @@ class WebController extends AbstractController {
 	 */
 	public function verDecreto( Decreto $decreto ) {
 
+		if ( ! $decreto->getActivo() ) {
+			return $this->redirectToRoute( 'web_decreto_no_encontrado' );
+		}
+
 		$titulo = 'Decreto Nº ' . $decreto->getNumero();
 
 		return $this->render( 'web/ver_decreto.html.twig',
 			[
 				'titulo'  => $titulo,
 				'decreto' => $decreto
+			] );
+	}
+
+	/**
+	 * @Route("/decreto_no_encontrado/{decreto}",defaults={"decreto": null}, name="web_decreto_no_encontrado")
+	 */
+	public function decretoInactivo() {
+
+		$titulo = 'Decreto No Encontrado ';
+
+		return $this->render( 'web/decreto_inactivo.html.twig',
+			[
+				'titulo' => $titulo,
 			] );
 	}
 

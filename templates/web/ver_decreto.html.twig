@@ -86,6 +86,15 @@
                     </div>
 
                     <div class="col-md-8 col-md-offset-2">
+                        <hr>
+                        <h4>Palabras Clave</h4>
+
+                        {% for palabraClave in decreto.palabrasClave %}
+                            <span class="label label-default">{{ palabraClave }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-8 col-md-offset-2">
 
                         {% if decreto.archivo %}
                             <div class="downloads">

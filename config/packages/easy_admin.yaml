@@ -7,6 +7,13 @@ easy_admin:
 #        - App\Entity\User
         Decreto:
             class: App\Entity\Decreto
+            list:
+              fields:
+                - { property: 'numero' }
+                - { property: 'anio', label: 'Año' }
+                - { property: 'descripcion', label: 'Descripción' }
+                - { property: 'destacado' }
+                - { property: 'activo' }
             form:
                 fields:
                   - { property: 'numero', label: 'Número' }
@@ -19,18 +26,34 @@ easy_admin:
                   - { property: 'activo' }
         User:
             class: App\Entity\User
+            label: 'Usuario'
             list:
               fields:
                 - { property: 'username' }
                 - { property: 'email', type: 'email' }
                 - { property: 'enabled' }
-                - { property: 'lastLogin' }
+            form:
+              title: 'Crear %%entity_label%%'
+              fields:
+                - username
+                - email
+                - enabled
+                # if administrators are allowed to edit users' passwords and roles, add this:
+                - { property: 'plainPassword', type: 'text', type_options: { required: false, mapped: false, label: 'Password' } }
+                - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: false, choices:
+                  { 'ROLE_USER': 'ROLE_USER',
+                    'ROLE_ADMIN': 'ROLE_ADMIN',
+                  }
+                }
+                }
         PalabraClave:
             class: App\Entity\PalabraClave
+            label: 'Palabra Clave'
             list:
                 fields:
                   - { property: 'descripcion' }
             form:
+                title: 'Crear %%entity_label%%'
                 fields:
                   - descripcion
 
@@ -52,7 +75,7 @@ easy_admin:
           - '@EasyAdmin/form/bootstrap_4.html.twig'
         menu:
           - { label: 'Ver Web', route: 'web_index', icon: 'globe'  }
-          - { label: 'Decretos', entity: Decreto }
+          - { label: 'Decretos', entity: Decreto, icon: 'file' }
           - { label: 'Palabras Clave', entity: PalabraClave, icon: 'key' }
-          - { label: 'Usuarios', entity: User, icon: 'user' }
+          - { label: 'Usuarios', entity: User, icon: 'user', permission: 'ROLE_ADMIN' }
 

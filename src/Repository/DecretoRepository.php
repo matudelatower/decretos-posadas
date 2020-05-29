@@ -59,14 +59,12 @@ class DecretoRepository extends ServiceEntityRepository {
 					$qb->expr()->like( 'UPPER(d.descripcion)', $qb->expr()->literal( "%$searchQuery%" ) ),
 					$qb->expr()->like( 'd.numero', $qb->expr()->literal( "%$searchQuery%" ) )
 				) )
-//			   ->setParameter( 's', $searchQuery )
 			   ;
 
 			$qb->leftJoin( 'd.palabrasClave', 'palabrasClave' );
 
-			$qb->orWhere( $qb->expr()->in( 'palabrasClave.descripcion', ':palabrasClave' ) );
+			$qb->orWhere( $qb->expr()->like( 'palabrasClave.descripcion', $qb->expr()->literal( "%$searchQuery%" )  ) );
 
-			$qb->setParameter( 'palabrasClave', [ $searchQuery ] );
 		}
 
 		return $qb;

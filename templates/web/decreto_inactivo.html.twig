@@ -1,0 +1,50 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block meta_social %}
+    {#    {% set description = 'Buscador de decretos' %}#}
+    {% set url = app.request.uri %}
+    {#    {% set image = absolute_url(asset('build/images/portada-share.jpg')) %}#}
+    {% set image = 'https://www.argentina.gob.ar/sites/default/files/styles/jumbotron/public/backimage_buscador/dsc_6377_paisaje_jujuy.jpg?itok=08iW_ZPN' %}
+    {% set description ='No se encontró el decreto' %}
+
+    <meta property="og:url" content="{{ app_url }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ titulo }}"/>
+    <meta property="og:description" content="{{ description }}"/>
+    <meta property="og:image" content="{{ image }}"/>
+    <meta property="og:locale" content="es_AR"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="{{ titulo }}"/>
+    <meta name="twitter:description" content="{{ description }}"/>
+    <meta name="twitter:image" content="{{ image }}"/>
+{% endblock meta_social %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <main role="main">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('web_index') }}">Inicio</a></li>
+                <li class="active">No encontrado</li>
+            </ol>
+
+            <section>
+                <article class="content_format row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1> No se encontró el decreto :(</h1>
+                    </div>
+
+                </article>
+            </section>
+        </div>
+
+    </main>
+{% endblock body %}

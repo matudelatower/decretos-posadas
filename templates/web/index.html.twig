@@ -22,58 +22,109 @@
 {% endblock meta_social %}
 
 {% block stylesheets %}
+    <style>
+
+        /*Extra small devices (portrait phones, less than 576px)*/
+        @media (max-width: 575.98px) {
+            .main-text {
+                top: 0px;
+            }
+        }
+
+        /*Small devices (landscape phones, 576px and up)*/
+        @media (min-width: 576px) and (max-width: 767.98px){
+            .main-text {
+                top: 1px;
+            }
+        }
+
+        /*Medium devices (tablets, 768px and up)*/
+        @media (min-width: 768px) and (max-width: 991.98px)  {
+            .main-text {
+                top: 2px;
+                position: absolute;
+                width: 96.66666666666666%;
+            }
+        }
+
+        /*Large devices (desktops, 992px and up)*/
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .main-text {
+                position: absolute;
+                top: 10px;
+                width: 96.66666666666666%;
+                color: #FFF;
+            }
+        }
+
+         /*Extra large devices (large desktops, 1200px and up)*/
+        @media (min-width: 1200px) {
+            .main-text {
+                top: 50px;
+                width: 96.66666666666666%;
+                color: #FFF;
+                position: absolute;
+            }
+        }
+        .section-banner{
+            padding: 0;
+        }
+        .navbar{
+            margin-bottom: unset;
+        }
+    </style>
 
 {% endblock stylesheets %}
+
+{% block destacados %}
+    {% if decretosDestacados %}
+        <section>
+            <div class="container">
+                <div>
+
+                    <div class="panel-separator"></div>
+                    <div class="panel-pane pane-atajos">
+                        <div class="pane-content">
+                            <div class="row panels-row " id="destacados">
+                                {% set cantidad = 12/(decretosDestacados | length) %}
+                                {% for destacado in decretosDestacados %}
+                                    <div class="col-xs-12 col-sm-3 col-md-{{ cantidad | number_format }}">
+                                        <a class="panel panel-default panel-icon panel-gray"
+                                           href="{{ path('web_ver_decreto', {'decreto': destacado.id}) }}">
+                                            <div class="panel-heading hidden-xs"><i class="fa fa-file"></i></div>
+                                            <div class="panel-body">
+                                                <h3><span class="visible-xs-inline"><i
+                                                                class="fa fa-file text-secondary"></i>  </span>{{ destacado.numero }}
+                                                </h3>
+
+                                                <div class="text-muted"><p>{{ destacado.descripcion }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel-separator"></div>
+
+                </div>
+
+
+            </div>
+        </section>
+    {% endif %}
+{% endblock destacados %}
 
 {% block body %}
 
     <main role="main">
 
-
-        {% if decretosDestacados %}
-            <section>
-                <div class="container">
-                    <div>
-
-                        <div class="panel-separator"></div>
-                        <div class="panel-pane pane-atajos">
-                            <div class="pane-content">
-
-
-                                <div class="row panels-row " id="destacados">
-                                    {% set cantidad = 12/(decretosDestacados | length) %}
-                                    {% for destacado in decretosDestacados %}
-                                        <div class="col-xs-12 col-sm-6 col-md-{{ cantidad | number_format }}">
-                                            <a class="panel panel-default panel-icon panel-gray"
-                                               href="{{ path('web_ver_decreto', {'decreto': destacado.id}) }}">
-                                                <div class="panel-heading hidden-xs"><i class="fa fa-file"></i></div>
-                                                <div class="panel-body">
-                                                    <h3><span class="visible-xs-inline"><i
-                                                                    class="fa fa-file text-secondary"></i>  </span>{{ destacado.numero }}
-                                                    </h3>
-
-                                                    <div class="text-muted"><p>{{ destacado.descripcion }}</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-
-
-                                    {% endfor %}
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="panel-separator"></div>
-
-                    </div>
-
-
-                </div>
-            </section>
-        {% endif %}
-        <section>
+        <section class="section-banner">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -91,27 +142,19 @@
                             <div class="carousel-inner" role="listbox">
                                 <div class="item active">
                                     <img src="{{ asset('build/images/slide1.jpg') }}" alt="slide 1">
-                                    {#                                    <div class="carousel-caption">#}
-                                    {#                                        #}
-                                    {#                                    </div>#}
+
                                 </div>
                                 <div class="item">
                                     <img src="{{ asset('build/images/slide2.jpg') }}" alt="slide 2">
-                                    {#                                    <div class="carousel-caption">#}
-                                    {#                                        #}
-                                    {#                                    </div>#}
+
                                 </div>
                                 <div class="item">
                                     <img src="{{ asset('build/images/slide3.jpg') }}" alt="slide 3">
-                                    {#                                    <div class="carousel-caption">#}
-                                    {#                                        #}
-                                    {#                                    </div>#}
+
                                 </div>
                                 <div class="item">
                                     <img src="{{ asset('build/images/slide4.jpg') }}" alt="slide 4">
-                                    {#                                    <div class="carousel-caption">#}
-                                    {#                                        #}
-                                    {#                                    </div>#}
+
                                 </div>
                             </div>
 
@@ -127,6 +170,11 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
+                        <div class="main-text">
+                            <div class="col-md-12 text-center">
+                                {{ block('destacados') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -135,7 +183,7 @@
                         <h2 class="text-center"><strong>Buscar Decretos</strong></h2>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row m-b-3">
                     <div class="col-md-8 col-md-offset-2">
                         <form role="search">
                             {{ form_start(form) }}
@@ -161,7 +209,7 @@
                         <div class="panel-pane pane-texto">
                             <div class="pane-content">
                                 <div class="">
-                                    <section class="m-y-0 p-y-1">
+                                    <section class="m-y-0 p-y-1" id="resultados">
 
                                         <h2>Resultados</h2>
                                         <div class="">
