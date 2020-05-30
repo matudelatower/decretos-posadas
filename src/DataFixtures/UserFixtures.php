@@ -20,13 +20,14 @@ class UserFixtures extends Fixture {
 		$user->setUsername( 'admin' );
 		$user->setEmail( 'matias.delatorre89@gmail.com' );
 		$user->setRoles( [ 'ROLE_ADMIN' ] );
+		$user->setEnabled( true );
 
 		$user->setPassword( $this->passwordEncoder->encodePassword(
 			$user,
 			'123456'
 		) );
 
-		$manager->persist($user);
+		$manager->persist( $user );
 		$manager->flush();
 	}
 }
