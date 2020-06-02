@@ -3,10 +3,9 @@
 {% block title %}{{ titulo }}{% endblock %}
 
 {% block meta_social %}
-    {#    {% set description = 'Buscador de decretos' %}#}
     {% set url = app.request.uri %}
-    {#    {% set image = absolute_url(asset('build/images/portada-share.jpg')) %}#}
-    {% set image = 'https://www.argentina.gob.ar/sites/default/files/styles/jumbotron/public/backimage_buscador/dsc_6377_paisaje_jujuy.jpg?itok=08iW_ZPN' %}
+
+    {% set image = absolute_url(asset('build/images/banner-estacion.jpg')) %}
 
     <meta property="og:url" content="{{ app_url }}"/>
     <meta property="og:type" content="article"/>
@@ -52,7 +51,7 @@
                                 <ul class="list-inline">
                                     <li>
                                         <a target="_blank"
-                                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                                           href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}&;src=sdkpreparse"
                                            class="fb-xfbml-parse-ignore"><i class="fa fa-facebook"></i>
                                         </a>
                                     </li>
@@ -76,10 +75,15 @@
                         <h2 class="text-right">{{ decreto.fecha | date('d/m/Y') }}</h2>
                         <p>{{ decreto.descripcion }}</p>
 
+                        {{ decreto.texto | raw }}
+
+                        <div class="m-b-3"></div>
+
                         {% if decreto.archivo %}
                             <div class="embed-responsive embed-responsive-16by9">
                                 <embed class="embed-responsive-item"
-                                       src="{{ vich_uploader_asset(decreto, 'decretoFile') }}">
+                                       src="{{ absolute_url(vich_uploader_asset(decreto, 'decretoFile')) }}">
+
                             </div>
                         {% endif %}
 
