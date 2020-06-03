@@ -82,7 +82,7 @@
                         {% if decreto.archivo %}
                             <div class="embed-responsive embed-responsive-16by9">
                                 <embed class="embed-responsive-item"
-                                       src="{{ absolute_url(vich_uploader_asset(decreto, 'decretoFile')) }}">
+                                       src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}">
 
                             </div>
                         {% endif %}
