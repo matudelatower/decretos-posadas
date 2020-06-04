@@ -21,14 +21,52 @@
 {% endblock meta_social %}
 
 {% block stylesheets %}
+    <style>
+        /*Extra small devices (portrait phones, less than 576px)*/
+        @media (max-width: 575.98px) {
+            section {
+                padding: 0;
+            }
 
+            .content_format h2 {
+                margin-top: 1rem;
+            }
+        }
+
+        /*Small devices (landscape phones, 576px and up)*/
+        @media (min-width: 576px) and (max-width: 767.98px) {
+
+            section {
+                padding: 0;
+            }
+
+            .content_format h2 {
+                margin-top: 1rem;
+            }
+        }
+
+        /*Medium devices (tablets, 768px and up)*/
+        @media (min-width: 768px) and (max-width: 991.98px) {
+
+        }
+
+        /*Large devices (desktops, 992px and up)*/
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+
+        }
+
+        /*Extra large devices (large desktops, 1200px and up)*/
+        @media (min-width: 1200px) {
+
+        }
+    </style>
 {% endblock stylesheets %}
 
 {% block body %}
 
     <main role="main">
         <div class="container">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb hidden-sm hidden-xs">
                 <li>
                     <a href="{{ path('web_index') }}">Inicio</a></li>
                 <li class="active">Decreto</li>
@@ -56,8 +94,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="https://twitter.com/intent/tweet?text=Decreto Nº {{ decreto.numero }} de la Ciudad de Posadas&url={{ app.request.uri }}"><i
-                                                    class="fa fa-twitter "></i>
+                                        <a target="_blank"
+                                           href="https://twitter.com/intent/tweet?text=Decreto Nº {{ decreto.numero }} de la Ciudad de Posadas&url={{ app.request.uri }}">
+                                            <i class="fa fa-twitter "></i>
                                         </a>
                                     </li>
                                     <li>
@@ -70,7 +109,8 @@
                             </div>
 
                         </div>
-                        <hr>
+
+                        <hr class="hidden-sm hidden-xs">
 
                         <h2 class="text-right">{{ decreto.fecha | date('d/m/Y') }}</h2>
                         <p>{{ decreto.descripcion }}</p>
@@ -80,11 +120,15 @@
                         <div class="m-b-3"></div>
 
                         {% if decreto.archivo %}
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <embed class="embed-responsive-item"
-                                       src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}">
-
-                            </div>
+                            {% if archivo.getExtension == 'pdf' %}
+                                <div class="embed-responsive embed-responsive-4by3 hidden-xs hidden-sm">
+                                    <embed class="embed-responsive-item"
+                                           src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}">
+                                </div>
+                            {% else %}
+                                <img src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}"
+                                     alt="{{ decreto }}" class="img-responsive">
+                            {% endif %}
                         {% endif %}
 
                     </div>
@@ -98,7 +142,7 @@
                         {% endfor %}
                     </div>
 
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-8 col-md-offset-2 m-b-1">
 
                         {% if decreto.archivo %}
                             <div class="downloads">
@@ -108,7 +152,9 @@
                                 <div class="row row-flex">
                                     <div class="col-xs-12 col-sm-6">
                                         <p class="text-muted m-b-1">Decreto </p>
-                                        <a class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Descargar
+                                        <a class="btn btn-primary btn-sm" target="_blank"
+                                           href="{{ path('web_descargar_decreto', {'decreto': decreto.id}) }}">
+                                            <i class="fa fa-download"></i>&nbsp;Descargar
                                             archivo</a>
                                     </div>
 

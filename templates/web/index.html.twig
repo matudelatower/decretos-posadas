@@ -107,10 +107,10 @@
                                 <div class="col-xs-12 col-sm-3 col-md-{{ cantidad | number_format }}">
                                     <a class="panel panel-default panel-icon panel-gray"
                                        href="{{ path('web_ver_decreto', {'decreto': destacado.id}) }}">
-                                        <div class="panel-heading hidden-xs"><i class="fa fa-file"></i></div>
+                                        <div class="panel-heading hidden-xs"><i class="fa fa-file text-info"></i></div>
                                         <div class="panel-body">
                                             <h3><span class="visible-xs-inline"><i
-                                                            class="fa fa-file text-secondary"></i>  </span>{{ destacado.numero }}
+                                                            class="fa fa-file text-info"></i>  </span>{{ destacado.numero }}
                                             </h3>
 
                                             <div class="text-muted"><p>{{ destacado.descripcion }}</p>
@@ -195,7 +195,7 @@
                             <div class="input-group input-group-lg">
                                 {{ form_widget(form.s) }}
                                 <span class="input-group-btn">
-                                    <button class="btn btn-primary" aria-label="Buscar" type="button"><span
+                                    <button class="btn btn-primary" aria-label="Buscar" type="submit"><span
                                                 class="glyphicon glyphicon-search"></span></button>
                                   </span>
                             </div>

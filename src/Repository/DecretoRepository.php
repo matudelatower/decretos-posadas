@@ -57,6 +57,7 @@ class DecretoRepository extends ServiceEntityRepository {
 				$qb->expr()->orX(
 					$qb->expr()->like( 'd.anio', $qb->expr()->literal( "%$searchQuery%" ) ),
 					$qb->expr()->like( 'UPPER(d.descripcion)', $qb->expr()->literal( "%$searchQuery%" ) ),
+					$qb->expr()->like( 'UPPER(d.texto)', $qb->expr()->literal( "%$searchQuery%" ) ),
 					$qb->expr()->like( 'd.numero', $qb->expr()->literal( "%$searchQuery%" ) )
 				) )
 			   ;

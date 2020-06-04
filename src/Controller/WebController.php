@@ -7,6 +7,7 @@ use App\Form\BuscarDecretoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 class WebController extends AbstractController {
 	/**
@@ -57,10 +58,14 @@ class WebController extends AbstractController {
 
 		$titulo = 'Decreto Nº ' . $decreto->getNumero();
 
+		$archivo = new \SplFileInfo( $decreto->getArchivo() );
+
+
 		return $this->render( 'web/ver_decreto.html.twig',
 			[
 				'titulo'  => $titulo,
-				'decreto' => $decreto
+				'decreto' => $decreto,
+				'archivo' => $archivo
 			] );
 	}
 
@@ -75,6 +80,22 @@ class WebController extends AbstractController {
 			[
 				'titulo' => $titulo,
 			] );
+	}
+
+	/**
+	 * @Route("/descargar_decreto/{decreto}", name="web_descargar_decreto")
+	 */
+	public function descargarDecreto( Decreto $decreto, DownloadHandler $downloadHandler ) {
+
+		if ( ! $decreto->getActivo() ) {
+			return $this->redirectToRoute( 'web_decreto_no_encontrado' );
+		}
+
+		return $downloadHandler->downloadObject( $decreto,
+			$fileField = 'decretoFile',
+			$objectClass = null,
+			$fileName = null,
+			$forceDownload = true );
 	}
 
 }

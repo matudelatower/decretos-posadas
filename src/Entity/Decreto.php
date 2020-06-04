@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=DecretoRepository::class)
  * @Vich\Uploadable
+ * @Assert\Callback(callback="validate")
  */
 class Decreto extends BaseClass {
 	/**
@@ -63,15 +66,34 @@ class Decreto extends BaseClass {
 	 */
 	private $palabrasClave;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $texto;
+	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	private $texto;
 
 	public function __construct() {
-         		$this->palabrasClave = new ArrayCollection();
-         	}
+		$this->palabrasClave = new ArrayCollection();
+	}
 
+	/**
+	 * @param ExecutionContextInterface $context
+	 */
+	public function validate( ExecutionContextInterface $context ) {
+		if ( $this->decretoFile && "" !== $this->decretoFile->getMimeType() ) {
+			if ( ! in_array( $this->decretoFile->getMimeType(),
+				[
+					'image/jpeg',
+					'image/jpg',
+					'image/png',
+					'application/pdf'
+				] ) ) {
+				$context
+					->buildViolation( 'Solo se aceptan .jpg, .png, .jpeg, .pdf' )
+					->atPath( 'fileName' )
+					->addViolation();
+			}
+		}
+	}
 
 	/**
 	 * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -85,126 +107,128 @@ class Decreto extends BaseClass {
 	 * @return Decreto
 	 */
 	public function setDecretoFile( File $file = null ) {
-         		$this->decretoFile = $file;
-         
-         		if ( $file ) {
-         			// It is required that at least one field changes if you are using doctrine
-         			// otherwise the event listeners won't be called and the file is lost
-         			$this->fechaActualizacion = new \DateTime( 'now' );
-         		}
-         
-         		return $this;
-         	}
+		$this->decretoFile = $file;
+
+		if ( $file ) {
+			// It is required that at least one field changes if you are using doctrine
+			// otherwise the event listeners won't be called and the file is lost
+			$this->fechaActualizacion = new \DateTime( 'now' );
+		}
+
+		return $this;
+	}
 
 	/**
 	 * @return File|null
 	 */
 	public function getDecretoFile() {
-         		return $this->decretoFile;
-         	}
+		return $this->decretoFile;
+	}
+
+	public function __toString(): ?string {
+		return $this->numero . ' - ' . $this->anio;
+	}
 
 	public function getId(): ?int {
-         		return $this->id;
-         	}
+		return $this->id;
+	}
 
 	public function getNumero(): ?string {
-         		return $this->numero;
-         	}
+		return $this->numero;
+	}
 
 	public function setNumero( string $numero ): self {
-         		$this->numero = $numero;
-         
-         		return $this;
-         	}
+		$this->numero = $numero;
+
+		return $this;
+	}
 
 	public function getAnio(): ?string {
-         		return $this->anio;
-         	}
+		return $this->anio;
+	}
 
 	public function setAnio( string $anio ): self {
-         		$this->anio = $anio;
-         
-         		return $this;
-         	}
+		$this->anio = $anio;
+
+		return $this;
+	}
 
 	public function getDescripcion(): ?string {
-         		return $this->descripcion;
-         	}
+		return $this->descripcion;
+	}
 
 	public function setDescripcion( ?string $descripcion ): self {
-         		$this->descripcion = $descripcion;
-         
-         		return $this;
-         	}
+		$this->descripcion = $descripcion;
+
+		return $this;
+	}
 
 	public function getFecha(): ?\DateTimeInterface {
-         		return $this->fecha;
-         	}
+		return $this->fecha;
+	}
 
 	public function setFecha( \DateTimeInterface $fecha ): self {
-         		$this->fecha = $fecha;
-         
-         		return $this;
-         	}
+		$this->fecha = $fecha;
+
+		return $this;
+	}
 
 	public function getDestacado(): ?bool {
-         		return $this->destacado;
-         	}
+		return $this->destacado;
+	}
 
 	public function setDestacado( ?bool $destacado ): self {
-         		$this->destacado = $destacado;
-         
-         		return $this;
-         	}
+		$this->destacado = $destacado;
+
+		return $this;
+	}
 
 	/**
 	 * @return string
 	 */
 	public function getArchivo(): ?string {
-         		return $this->archivo;
-         	}
+		return $this->archivo;
+	}
 
 	/**
 	 * @param string $archivo
 	 */
 	public function setArchivo( ?string $archivo ): void {
-         		$this->archivo = $archivo;
-         	}
+		$this->archivo = $archivo;
+	}
 
 	/**
 	 * @return Collection|PalabraClave[]
 	 */
 	public function getPalabrasClave(): Collection {
-         		return $this->palabrasClave;
-         	}
+		return $this->palabrasClave;
+	}
 
 	public function addPalabrasClave( PalabraClave $palabrasClave ): self {
-         		if ( ! $this->palabrasClave->contains( $palabrasClave ) ) {
-         			$this->palabrasClave[] = $palabrasClave;
-         		}
-         
-         		return $this;
-         	}
+		if ( ! $this->palabrasClave->contains( $palabrasClave ) ) {
+			$this->palabrasClave[] = $palabrasClave;
+		}
+
+		return $this;
+	}
 
 	public function removePalabrasClave( PalabraClave $palabrasClave ): self {
-         		if ( $this->palabrasClave->contains( $palabrasClave ) ) {
-         			$this->palabrasClave->removeElement( $palabrasClave );
-         		}
-         
-         		return $this;
-         	}
+		if ( $this->palabrasClave->contains( $palabrasClave ) ) {
+			$this->palabrasClave->removeElement( $palabrasClave );
+		}
 
-    public function getTexto(): ?string
-    {
-        return $this->texto;
-    }
+		return $this;
+	}
 
-    public function setTexto(?string $texto): self
-    {
-        $this->texto = $texto;
+	public function getTexto(): ?string {
+		return $this->texto;
+	}
 
-        return $this;
-    }
+	public function setTexto( ?string $texto ): self {
+		$this->texto = $texto;
+
+		return $this;
+	}
 
 
 }

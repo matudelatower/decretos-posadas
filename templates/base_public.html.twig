@@ -23,6 +23,8 @@
     <meta name="msapplication-navbutton-color" content="{{ app_color }}">
     <meta name="apple-mobile-web-app-status-bar-style" content="{{ app_color }}">
 
+    <meta name="author" content="Matias Solis de la Torre" />
+
     {% block meta_social %}
         {% set titulo = 'Decretos Posadas' %}
         {% set description = 'Buscador de decretos Posadas' %}
@@ -105,12 +107,61 @@
 
         }
 
-        .brand-logo {
-            max-height: 6rem;
+
+        /*Extra small devices (portrait phones, less than 576px)*/
+        @media (max-width: 575.98px) {
+            .brand-logo {
+                max-height: 4rem;
+            }
+
+            .navbar-default {
+                padding-bottom: 1rem;
+            }
         }
 
-        .navbar-default {
-            padding-bottom: 3rem;
+        /*Small devices (landscape phones, 576px and up)*/
+        @media (min-width: 576px) and (max-width: 767.98px) {
+
+            .brand-logo {
+                max-height: 4rem;
+            }
+
+            .navbar-default {
+                padding-bottom: 1rem;
+            }
+        }
+
+        /*Medium devices (tablets, 768px and up)*/
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .brand-logo {
+                max-height: 6rem;
+            }
+
+            .navbar-default {
+                padding-bottom: 1rem;
+            }
+        }
+
+        /*Large devices (desktops, 992px and up)*/
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .brand-logo {
+                max-height: 6rem;
+            }
+
+            .navbar-default {
+                padding-bottom: 1rem;
+            }
+        }
+
+        /*Extra large devices (large desktops, 1200px and up)*/
+        @media (min-width: 1200px) {
+            .brand-logo {
+                max-height: 6rem;
+            }
+
+            .navbar-default {
+                padding-bottom: 1rem;
+            }
         }
 
         @media (max-width: 490px) {
@@ -120,7 +171,8 @@
                 padding: 1rem;
             }
         }
-        body{
+
+        body {
             background-color: #F2F3F4;
         }
     </style>
