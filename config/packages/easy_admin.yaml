@@ -1,5 +1,5 @@
 easy_admin:
-    disabled_actions: ['delete']
+#    disabled_actions: ['delete']
     entities:
 #         List the entity class name you want to manage
 #        - App\Entity\Decreto
@@ -8,6 +8,7 @@ easy_admin:
         Decreto:
             class: App\Entity\Decreto
             list:
+              sort: ['numero', 'DESC']
               fields:
                 - { property: 'numero' }
                 - { property: 'anio', label: 'Año' }

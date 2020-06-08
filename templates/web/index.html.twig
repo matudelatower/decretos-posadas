@@ -95,19 +95,17 @@
 {% block destacados %}
     {% if decretosDestacados %}
         <section class="p-b-0">
-            <div class="container">
-
-
+            <div class="container-fluid">
                 <div class="panel-separator"></div>
                 <div class="panel-pane pane-atajos">
                     <div class="pane-content">
                         <div class="row panels-row " id="destacados">
                             {% set cantidad = 12/(decretosDestacados | length) %}
                             {% for destacado in decretosDestacados %}
-                                <div class="col-xs-12 col-sm-3 col-md-{{ cantidad | number_format }}">
+                                <div class="{% if loop.first %} col-md-offset-1 {% endif %} col-xs-12 col-sm-3 col-md-{{ cantidad | number_format }}">
                                     <a class="panel panel-default panel-icon panel-gray"
                                        href="{{ path('web_ver_decreto', {'decreto': destacado.id}) }}">
-                                        <div class="panel-heading hidden-xs"><i class="fa fa-file text-info"></i></div>
+                                        <div class="panel-heading hidden-xs"><i class="fa fa-file-o text-info"></i></div>
                                         <div class="panel-body">
                                             <h3><span class="visible-xs-inline"><i
                                                             class="fa fa-file text-info"></i>  </span>{{ destacado.numero }}

@@ -68,6 +68,8 @@ class DecretoRepository extends ServiceEntityRepository {
 
 		}
 
+		$qb->andWhere('d.activo = true');
+
 		return $qb;
 	}
 }

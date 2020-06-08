@@ -57,7 +57,13 @@
 
         /*Extra large devices (large desktops, 1200px and up)*/
         @media (min-width: 1200px) {
+            section {
+                padding: 0;
+            }
 
+            .content_format h3{
+                margin-top: 1rem;
+            }
         }
     </style>
 {% endblock stylesheets %}
@@ -76,13 +82,38 @@
                 <article class="content_format row">
                     <div class="col-md-8 col-md-offset-2">
 
-                        <h1>Decreto Nº {{ decreto.numero }} {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") %}
+                        <h3>Decreto Nº {{ decreto.numero }} ({{ decreto.fecha | date('d/m/Y') }}) {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") %}
                                 <a class="btn btn-icon"
                                    href="{{ path('easyadmin') }}?entity=Decreto&action=edit&referer={{ app.request.uri }}&id={{ decreto.id }}">
 
                                     <i class="fa fa-edit"></i> Editar
                                 </a>
-                            {% endif %}</h1>
+                            {% endif %}</h3>
+
+
+                        <hr class="hidden-sm hidden-xs">
+
+{#                        <h2 class="text-right">{{ decreto.fecha | date('d/m/Y') }}</h2>#}
+                        <h4 class="text-center">{{ decreto.descripcion }}</h4>
+
+                        <div class="m-b-3"></div>
+
+                        {% if decreto.archivo %}
+                            {% if archivo.getExtension == 'pdf' %}
+                                <div class="embed-responsive embed-responsive-4by3 hidden-xs hidden-sm">
+                                    <embed class="embed-responsive-item"
+                                           src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}">
+                                </div>
+                            {% else %}
+                                <img src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}"
+                                     alt="{{ decreto }}" class="img-responsive">
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-8 col-md-offset-2 m-t-1">
+
                         <div class="row">
                             <div class="section-actions col-md-7 social-share">
                                 <p>Compartir</p>
@@ -109,49 +140,11 @@
                             </div>
 
                         </div>
-
-                        <hr class="hidden-sm hidden-xs">
-
-                        <h2 class="text-right">{{ decreto.fecha | date('d/m/Y') }}</h2>
-                        <p>{{ decreto.descripcion }}</p>
-
-                        {{ decreto.texto | raw }}
-
-                        <div class="m-b-3"></div>
-
                         {% if decreto.archivo %}
-                            {% if archivo.getExtension == 'pdf' %}
-                                <div class="embed-responsive embed-responsive-4by3 hidden-xs hidden-sm">
-                                    <embed class="embed-responsive-item"
-                                           src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}">
-                                </div>
-                            {% else %}
-                                <img src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}"
-                                     alt="{{ decreto }}" class="img-responsive">
-                            {% endif %}
-                        {% endif %}
 
-                    </div>
-
-                    <div class="col-md-8 col-md-offset-2">
-                        <hr>
-                        <h4>Palabras Clave</h4>
-
-                        {% for palabraClave in decreto.palabrasClave %}
-                            <span class="label label-default">{{ palabraClave }}</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="col-md-8 col-md-offset-2 m-b-1">
-
-                        {% if decreto.archivo %}
-                            <div class="downloads">
-                                <hr>
-                                <h4>Descargas</h4>
-
-                                <div class="row row-flex">
+                                <div class="row row-flex m-b-3">
                                     <div class="col-xs-12 col-sm-6">
-                                        <p class="text-muted m-b-1">Decreto </p>
+
                                         <a class="btn btn-primary btn-sm" target="_blank"
                                            href="{{ path('web_descargar_decreto', {'decreto': decreto.id}) }}">
                                             <i class="fa fa-download"></i>&nbsp;Descargar
@@ -161,7 +154,6 @@
                                 </div>
 
 
-                            </div>
                         {% endif %}
 
                     </div>
