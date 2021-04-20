@@ -18,6 +18,6 @@
     },
     "dependencies": {
         "ar-poncho": "^2.0.60",
-        "jquery": "^2.2.4"
+        "jquery": "^3.5.0"
     }
 }
