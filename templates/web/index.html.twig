@@ -108,7 +108,7 @@
                                         <div class="panel-heading hidden-xs"><i class="fa fa-file-o text-info"></i></div>
                                         <div class="panel-body">
                                             <h3><span class="visible-xs-inline"><i
-                                                            class="fa fa-file text-info"></i>  </span>{{ destacado.numero }}
+                                                            class="fa fa-file text-info"></i>  </span>Decreto {{ destacado.numero }}
                                             </h3>
 
                                             <div class="text-muted"><p>{{ destacado.descripcion }}</p>
@@ -160,7 +160,7 @@
 
                 <div class="row m-t-3">
                     <div class="col-md-12">
-                        <h3 class="text-center"><strong>Buscar Decretos</strong></h3>
+                        <h3 class="text-center"><strong>Buscar</strong></h3>
                     </div>
                 </div>
 
@@ -206,8 +206,28 @@
                                                                                 class="fa icono-arg-educacion fa-fw fa-2x text-primary"></i>
                                                                     </div>
                                                                     <div class="media-body">
-                                                                        <h3>{{ decreto.numero }}</h3>
+                                                                        <h3>Decreto {{ decreto.numero }}</h3>
                                                                         <p>{{ decreto.descripcion }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                {% endfor %}
+
+                                                {% for resolucion in resoluciones %}
+                                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                                        <a class="panel panel-default"
+                                                           href="{{ path('web_ver_resolucion', {'resolucion': resolucion.id}) }}">
+                                                            <div class="panel-body">
+                                                                <div class="media">
+                                                                    <div class="media-left padding-20"><i
+                                                                                class="fa icono-arg-educacion fa-fw fa-2x text-success"></i>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h3>Resolución {{ resolucion.numero }}</h3>
+                                                                        <p>{{ resolucion.descripcion }}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

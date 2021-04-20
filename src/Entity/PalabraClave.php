@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\PalabraClaveRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=PalabraClaveRepository::class)
+ * @Gedmo\Loggable
  */
 class PalabraClave extends BaseClass {
 	/**
@@ -18,6 +20,7 @@ class PalabraClave extends BaseClass {
 
 	/**
 	 * @ORM\Column(type="string", length=255)
+	 * @Gedmo\Versioned
 	 */
 	private $descripcion;
 

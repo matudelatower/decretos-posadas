@@ -4,3 +4,6 @@ vich_uploader:
         decretos:
             uri_prefix:         '%app.path.decretos%'
             upload_destination: '%kernel.project_dir%/public%app.path.decretos%'
+        resoluciones:
+            uri_prefix: '%app.path.resoluciones%'
+            upload_destination: '%kernel.project_dir%/public%app.path.resoluciones%'

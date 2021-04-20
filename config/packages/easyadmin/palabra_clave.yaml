@@ -1,0 +1,14 @@
+easy_admin:
+  entities:
+    PalabraClave:
+      class: App\Entity\PalabraClave
+      label: 'Palabra Clave'
+      list:
+        actions:
+          - { name: 'verCambios', label: '', icon: 'history', permission: 'ROLE_ADMIN' }
+        fields:
+          - { property: 'descripcion' }
+      form:
+        title: 'Crear %%entity_label%%'
+        fields:
+          - descripcion

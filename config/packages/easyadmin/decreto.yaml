@@ -1,0 +1,37 @@
+easy_admin:
+  entities:
+    Decreto:
+      class: App\Entity\Decreto
+      list:
+        sort: [ 'numero', 'DESC' ]
+        actions:
+          - { name: 'verCambios', label: '', icon: 'history', permission: 'ROLE_ADMIN' }
+        fields:
+          - { property: 'numero' }
+          - { property: 'anio', label: 'Año' }
+          - { property: 'descripcion', label: 'Descripción' }
+          - { property: 'destacado' }
+          - { property: 'activo' }
+      show:
+        fields:
+          - { property: 'numero' }
+          - { property: 'anio', label: 'Año' }
+          - { property: 'descripcion', label: 'Descripción' }
+          - { property: 'texto', type: 'raw', label: 'Descripción' }
+          - { property: 'destacado' }
+          - { property: 'activo' }
+          - { property: 'fechaCreacion' }
+          - { property: 'fechaActualizacion' }
+          - { property: 'ceadoPor', permission: 'ROLE_ADMIN' }
+          - { property: 'actualizadoPor', permission: 'ROLE_ADMIN' }
+      form:
+        fields:
+          - { property: 'numero', label: 'Número' }
+          - { property: 'anio', label: 'Año' }
+          - { property: 'descripcion', label: 'Descripción' }
+          - { property: 'texto', type: 'text_editor', label: 'Texto' }
+          - { property: 'fecha', type: 'date', type_options: { widget: 'single_text', html5: true } }
+          - { property: 'palabrasClave', type: 'easyadmin_autocomplete' }
+          - { property: 'decretoFile', label: 'Archivo', type: 'vich_file', base_path: '%app.path.decretos%' }
+          - { property: 'destacado' }
+          - { property: 'activo' }

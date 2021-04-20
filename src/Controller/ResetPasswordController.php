@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Usuario;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
@@ -124,7 +125,7 @@ class ResetPasswordController extends AbstractController {
 			// The session is cleaned up after the password has been changed.
 			$this->cleanSessionAfterReset();
 
-			return $this->redirectToRoute( 'app_homepage' );
+			return $this->redirectToRoute( 'app_login' );
 		}
 
 		return $this->render( 'reset_password/reset.html.twig',
@@ -137,7 +138,7 @@ class ResetPasswordController extends AbstractController {
 		string $emailFormData,
 		MailerInterface $mailer
 	): RedirectResponse {
-		$user = $this->getDoctrine()->getRepository( Usuario::class )->findOneBy( [
+		$user = $this->getDoctrine()->getRepository( User::class )->findOneBy( [
 			'email' => $emailFormData,
 		] );
 

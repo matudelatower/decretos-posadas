@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Decreto;
+use App\Entity\Resolucion;
 use App\Form\BuscarDecretoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class WebController extends AbstractController {
 		$em = $this->getDoctrine();
 
 		$decretos           = [];
+		$resoluciones           = [];
 		$decretosDestacados = $em->getRepository( Decreto::class )->findBy( [
 			'destacado' => true,
 			'activo'    => true
@@ -36,6 +38,11 @@ class WebController extends AbstractController {
 
 			$decretos = $resultados->getQuery()
 			                       ->getResult();
+
+			$resultadoResoluciones = $em->getRepository( Resolucion::class )->buscarResoluciones( $data );
+
+			$resoluciones = $resultadoResoluciones->getQuery()
+			                           ->getResult();
 		}
 
 		return $this->render( 'web/index.html.twig',
@@ -43,6 +50,7 @@ class WebController extends AbstractController {
 				'titulo'             => 'Inicio',
 				'form'               => $form->createView(),
 				'decretos'           => $decretos,
+				'resoluciones'           => $resoluciones,
 				'decretosDestacados' => $decretosDestacados,
 			] );
 	}
@@ -65,6 +73,28 @@ class WebController extends AbstractController {
 			[
 				'titulo'  => $titulo,
 				'decreto' => $decreto,
+				'archivo' => $archivo
+			] );
+	}
+
+	/**
+	 * @Route("/ver_resolucion/{resolucion}", name="web_ver_resolucion")
+	 */
+	public function verResolucion ( Resolucion $resolucion ) {
+
+		if ( ! $resolucion->getActivo() ) {
+			return $this->redirectToRoute( 'web_decreto_no_encontrado' );
+		}
+
+		$titulo = 'Resolución Nº ' . $resolucion->getNumero();
+
+		$archivo = new \SplFileInfo( $resolucion->getArchivo() );
+
+
+		return $this->render( 'web/ver_resolucion.html.twig',
+			[
+				'titulo'  => $titulo,
+				'resolucion' => $resolucion,
 				'archivo' => $archivo
 			] );
 	}
@@ -93,6 +123,22 @@ class WebController extends AbstractController {
 
 		return $downloadHandler->downloadObject( $decreto,
 			$fileField = 'decretoFile',
+			$objectClass = null,
+			$fileName = null,
+			$forceDownload = true );
+	}
+
+	/**
+	 * @Route("/descargar_resolucion/{resolucion}", name="web_descargar_resolucion")
+	 */
+	public function descargarResolucion( Resolucion $resolucion, DownloadHandler $downloadHandler ) {
+
+		if ( ! $resolucion->getActivo() ) {
+			return $this->redirectToRoute( 'web_decreto_no_encontrado' );
+		}
+
+		return $downloadHandler->downloadObject( $resolucion,
+			$fileField = 'resolucionFile',
 			$objectClass = null,
 			$fileName = null,
 			$forceDownload = true );

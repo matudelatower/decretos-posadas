@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\DecretoRepository;
+use App\Repository\ResolucionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,18 +13,19 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass=DecretoRepository::class)
+ * @ORM\Entity(repositoryClass=ResolucionRepository::class)
  * @Vich\Uploadable
- * @Assert\Callback(callback="validate")
  * @Gedmo\Loggable
+ * @Assert\Callback(callback="validate")
  */
-class Decreto extends BaseClass {
-	/**
-	 * @ORM\Id()
-	 * @ORM\GeneratedValue()
-	 * @ORM\Column(type="integer")
-	 */
-	private $id;
+class Resolucion extends BaseClass
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
 	/**
 	 * @ORM\Column(type="string", length=255)
@@ -52,6 +53,7 @@ class Decreto extends BaseClass {
 
 	/**
 	 * @ORM\Column(type="boolean", nullable=true)
+	 * @Gedmo\Versioned
 	 */
 	private $destacado;
 
@@ -62,10 +64,10 @@ class Decreto extends BaseClass {
 	private $archivo;
 
 	/**
-	 * @Vich\UploadableField(mapping="decretos", fileNameProperty="archivo")
+	 * @Vich\UploadableField(mapping="resoluciones", fileNameProperty="archivo")
 	 * @var File
 	 */
-	private $decretoFile;
+	private $resolucionFile;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity=PalabraClave::class)
@@ -86,8 +88,8 @@ class Decreto extends BaseClass {
 	 * @param ExecutionContextInterface $context
 	 */
 	public function validate( ExecutionContextInterface $context ) {
-		if ( $this->decretoFile && "" !== $this->decretoFile->getMimeType() ) {
-			if ( ! in_array( $this->decretoFile->getMimeType(),
+		if ( $this->resolucionFile && "" !== $this->resolucionFile->getMimeType() ) {
+			if ( ! in_array( $this->resolucionFile->getMimeType(),
 				[
 					'image/jpeg',
 					'image/jpg',
@@ -111,10 +113,10 @@ class Decreto extends BaseClass {
 	 *
 	 * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
 	 *
-	 * @return Decreto
+	 * @return Resolucion
 	 */
-	public function setDecretoFile( File $file = null ) {
-		$this->decretoFile = $file;
+	public function setResolucionFile( File $file = null ) {
+		$this->resolucionFile = $file;
 
 		if ( $file ) {
 			// It is required that at least one field changes if you are using doctrine
@@ -128,8 +130,8 @@ class Decreto extends BaseClass {
 	/**
 	 * @return File|null
 	 */
-	public function getDecretoFile() {
-		return $this->decretoFile;
+	public function getResolucionFile() {
+		return $this->resolucionFile;
 	}
 
 	public function __toString(): ?string {
@@ -236,6 +238,4 @@ class Decreto extends BaseClass {
 
 		return $this;
 	}
-
-
 }

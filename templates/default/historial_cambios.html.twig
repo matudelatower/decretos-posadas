@@ -1,0 +1,88 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{# {% block content %} #}
+    {% block content_header %}
+        {% block content_title %}
+            <strong>Historial de Cambios:</strong> {{ entity }} {{ object }}
+        {% endblock content_title %}
+    {% endblock content_header %}
+
+    {% block main %}
+        <div class="form-horizontal">
+            {% if cambios | length <= 0 %}
+                <strong>Sin Cambios</strong>
+            {% endif %}
+            {% for cambio in cambios %}
+
+                <div class="form-group field-string ">
+                    <label class="control-label">
+                        Acción
+                    </label>
+                    <div class="form-widget">
+                        <div class="form-control">
+                            {% if cambio.action == 'create' %}
+                                Creación
+                            {% elseif cambio.action == 'update' %}
+                                Actualización
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group field-string ">
+                    <label class="control-label">
+                        Fecha
+                    </label>
+                    <div class="form-widget">
+                        <div class="form-control">
+                            {{ cambio.loggedAt | date('d/m/Y H:i') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group field-string ">
+                    <label class="control-label">
+                        Usuario
+                    </label>
+                    <div class="form-widget">
+                        <div class="form-control">
+                            {{ cambio.username }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group field-json ">
+                    <label class="control-label">
+                        Cambios
+                    </label>
+                    <div class="form-widget">
+                        <div class="">
+                            <ul>
+                                {% for itemKey in cambio.data | keys %}
+
+                                    {% if cambio.data[itemKey].timestamp is defined %}
+                                        <li>
+                                            {{ itemKey |humanize }}: {{ cambio.data[itemKey]|date('m/d/Y') }}
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            {{ itemKey |humanize }}: {{ cambio.data[itemKey] }}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+
+        </div>
+    {% endblock %}
+{% block content_footer %}
+    <div class="form-actions">
+        <a class=" btn btn-link pr-0 action-list" title="" href="{{ referer }}" target="_self">Volver al listado</a>
+    </div>
+
+{% endblock content_footer %}
+{# {% endblock content %}              #}

@@ -10,13 +10,13 @@
     <meta property="og:url" content="{{ app_url }}"/>
     <meta property="og:type" content="article"/>
     <meta property="og:title" content="{{ titulo }}"/>
-    <meta property="og:description" content="{{ decreto.descripcion }}"/>
+    <meta property="og:description" content="{{ resolucion.descripcion }}"/>
     <meta property="og:image" content="{{ image }}"/>
     <meta property="og:locale" content="es_AR"/>
 
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="{{ titulo }}"/>
-    <meta name="twitter:description" content="{{ decreto.descripcion }}"/>
+    <meta name="twitter:description" content="{{ resolucion.descripcion }}"/>
     <meta name="twitter:image" content="{{ image }}"/>
 {% endblock meta_social %}
 
@@ -84,17 +84,17 @@
             <ol class="breadcrumb hidden-sm hidden-xs">
                 <li>
                     <a href="{{ path('web_index') }}">Inicio</a></li>
-                <li class="active">Decreto</li>
+                <li class="active">Resolución</li>
             </ol>
 
             <section>
                 <article class="content_format row">
                     <div class="col-md-8 col-md-offset-2">
 
-                        <h4>Decreto Nº {{ decreto.numero }} ({{ decreto.fecha | date('d/m/Y') }})
+                        <h4>Resolución Nº {{ resolucion.numero }} ({{ resolucion.fecha | date('d/m/Y') }})
                             {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") %}
                                 <a class="btn btn-icon"
-                                   href="{{ path('easyadmin') }}?entity=Decreto&action=edit&referer={{ app.request.uri }}&id={{ decreto.id }}">
+                                   href="{{ path('easyadmin') }}?entity=Resolución&action=edit&referer={{ app.request.uri }}&id={{ resolucion.id }}">
 
                                     <i class="fa fa-edit"></i> Editar
                                 </a>
@@ -104,20 +104,20 @@
 
                         {# <hr class="hidden-sm hidden-xs"> #}
 
-                        {# <h2 class="text-right">{{ decreto.fecha | date('d/m/Y') }}</h2> #}
-                        <h2 class="text-center">{{ decreto.descripcion }}</h2>
+                        {# <h2 class="text-right">{{ resolucion.fecha | date('d/m/Y') }}</h2> #}
+                        <h2 class="text-center">{{ resolucion.descripcion }}</h2>
 
                         <div class="m-b-3"></div>
 
-                        {% if decreto.archivo %}
+                        {% if resolucion.archivo %}
                             {% if archivo.getExtension == 'pdf' %}
                                 <div class="embed-responsive embed-responsive-4by3 hidden-xs hidden-sm">
                                     <embed class="embed-responsive-item"
-                                           src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}">
+                                           src="{{ app_url ~ vich_uploader_asset(resolucion, 'resolucionFile') }}">
                                 </div>
                             {% else %}
-                                <img src="{{ app_url ~ vich_uploader_asset(decreto, 'decretoFile') }}"
-                                     alt="{{ decreto }}" class="img-responsive">
+                                <img src="{{ app_url ~ vich_uploader_asset(resolucion, 'resolucionFile') }}"
+                                     alt="{{ resolucion }}" class="img-responsive">
                             {% endif %}
                         {% endif %}
 
@@ -137,12 +137,12 @@
                                     </li>
                                     <li>
                                         <a target="_blank"
-                                           href="https://twitter.com/intent/tweet?text=Decreto Nº {{ decreto.numero }} de la Ciudad de Posadas&url={{ app.request.uri }}">
+                                           href="https://twitter.com/intent/tweet?text=Resolución Nº {{ resolucion.numero }} de la Ciudad de Posadas&url={{ app.request.uri }}">
                                             <i class="fa fa-twitter "></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="whatsapp://send?text=Decreto Nº {{ decreto.numero }} de la Ciudad de Posadas - {{ app.request.uri }}"
+                                        <a href="whatsapp://send?text=Resolución Nº {{ resolucion.numero }} de la Ciudad de Posadas - {{ app.request.uri }}"
                                            data-action="share/whatsapp/share">
                                             <i class="fa fa-whatsapp "></i>
                                         </a>
@@ -151,13 +151,13 @@
                             </div>
 
                         </div>
-                        {% if decreto.archivo %}
+                        {% if resolucion.archivo %}
 
                             <div class="row row-flex m-b-3">
                                 <div class="col-xs-12 col-sm-6">
 
                                     <a class="btn btn-primary btn-sm" target="_blank"
-                                       href="{{ path('web_descargar_decreto', {'decreto': decreto.id}) }}">
+                                       href="{{ path('web_descargar_resolucion', {'resolucion': resolucion.id}) }}">
                                         <i class="fa fa-download"></i>&nbsp;Descargar
                                         archivo</a>
                                 </div>
