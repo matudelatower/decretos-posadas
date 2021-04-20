@@ -11,6 +11,8 @@ easy_admin:
 
   design:
     brand_color: '#%env(APP_COLOR)%'
+    assets:
+      favicon: 'logo_oficial.ico'
     #            templates:
     #                layout: 'easyadmin/default/layout.html.twig'
     form_theme:
