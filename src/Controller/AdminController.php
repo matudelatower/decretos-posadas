@@ -36,13 +36,10 @@ class AdminController extends EasyAdminController {
 
 	public function verCambiosAction() {
 
-		dump( $this->request );
 		$entity    = $this->request->query->get( 'entity' );
 		$id        = $this->request->query->get( 'id' );
 		$className = 'App:' . $entity;
-//		dump( $className );
-//		exit;
-		$cambios = [];
+		$cambios   = [];
 
 		$em = $this->getDoctrine()->getManager();
 
@@ -56,7 +53,7 @@ class AdminController extends EasyAdminController {
 				'entity'  => $entity,
 				'object'  => $object,
 				'cambios' => $logs,
-				'referer'=> urldecode($this->request->query->get('referer'))
+				'referer' => urldecode( $this->request->query->get( 'referer' ) )
 			] );
 	}
 }
