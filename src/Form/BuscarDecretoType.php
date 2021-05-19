@@ -14,7 +14,7 @@ class BuscarDecretoType extends AbstractType {
 				SearchType::class,
 				[
 					'label' => 'buscar',
-					'attr'  => [ 'placeholder' => 'Buscar por número, año, descripción..' ]
+					'attr'  => [ 'placeholder' => 'Decretos por número, año, descripción...' ]
 				] );
 	}
 
